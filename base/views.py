@@ -15,22 +15,14 @@ def index(request):
     if request.method == 'POST':
         form = DoctorInputForm(request.POST)
         if form.is_valid():
-            user = request.user
-            specializations = form.cleaned_data.get('specializations')
-            doctor_info = DoctorInfo.objects.create(
-                user=user,
-                specializations=json.dumps(specializations)
-            )
-            doctor_info.save()
+            doctor_info = form.save(commit=False)  # Tworzy obiekt DoctorInfo na podstawie danych z formularza
+            doctor_info.user = request.user  # Przypisanie obiektu użytkownika do pola user
+            doctor_info.save()  # Zapisanie obiektu DoctorInfo w bazie danych
+            return redirect('index')
     else:
         form = DoctorInputForm()
-        doctor_specializations = Specialization.objects.all()
-    context = {
-        'doctorSpecializations': doctor_specializations,
-        'form' : form
-    }
     
-    return render(request, 'base/index.html', context)
+    return render(request, 'base/index.html', {'form': form})
 
 
 def login_view(request):
