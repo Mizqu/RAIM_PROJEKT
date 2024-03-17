@@ -13,12 +13,14 @@ class DoctorCreationForm(forms.Form):
     bio = forms.CharField(widget=forms.Textarea)
 
 class CustomUserCreationForm(forms.ModelForm):
+    first_name = forms.CharField(label='Imie')
+    last_name = forms.CharField(label='Nazwisko')
     username = forms.CharField(label='Nazwa użytkownika')
     password1 = forms.CharField(label='Hasło', widget=forms.PasswordInput)
     password2 = forms.CharField(label='Potwierdź hasło', widget=forms.PasswordInput)
     class Meta:
         model = User
-        fields = ['username', 'password1', 'password2']
+        fields = ['first_name','last_name','username', 'password1', 'password2']
   
     def save(self, commit=True):
         user = super().save(commit=False)
