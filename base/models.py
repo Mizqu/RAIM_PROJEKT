@@ -17,10 +17,15 @@ class Specialization(models.Model):
 class DoctorInfo(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     specializations = models.ManyToManyField(Specialization)
+    lorem = models.TextField(max_length=350, null=True, default='')
     bio = models.TextField(max_length=350, null=True, default='')
 
     def __str__(self):
         return self.user.username
+
+
+    
+
     
 
 

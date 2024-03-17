@@ -10,7 +10,7 @@ class DoctorCreationForm(forms.Form):
         queryset=Specialization.objects.all(),
         widget=forms.CheckboxSelectMultiple
     )
-    bio = forms.CharField(widget=forms.Textarea)
+    lorem = forms.CharField(widget=forms.Textarea)
 
 class CustomUserCreationForm(forms.ModelForm):
     first_name = forms.CharField(label='Imie')
