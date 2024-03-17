@@ -5,25 +5,12 @@ from .models import User, Specialization
 from django.contrib.auth.forms import AuthenticationForm
 import json
 
-class DoctorInputForm(forms.Form):
+class DoctorCreationForm(forms.Form):
     specializations = forms.ModelMultipleChoiceField(
         queryset=Specialization.objects.all(),
-        widget=forms.CheckboxSelectMultiple,
-        required=False,
+        widget=forms.CheckboxSelectMultiple
     )
-    class Meta:
-        model = DoctorInfo
-        fields = ['specializations']
-
-    def save(self, commit=True):
-        instance = super().save(commit=False)
-        specializations = self.cleaned_data.get('specializations', [])
-        instance.specializations = json.dumps([spec.id for spec in specializations])
-        if commit:
-            instance.save()
-        return instance
-
-    
+    bio = forms.CharField(widget=forms.Textarea)
 
 class CustomUserCreationForm(forms.ModelForm):
     username = forms.CharField(label='Nazwa użytkownika')
