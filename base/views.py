@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from .forms import DoctorInputForm, CustomUserCreationForm
+from .forms import CustomUserCreationForm
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import redirect
 import logging
@@ -10,18 +10,20 @@ from django.http import HttpResponseRedirect
 from .models import Specialization
 import json
 from .models import DoctorInfo
+from .forms import DoctorCreationForm
 
 def index(request):
     if request.method == 'POST':
-        form = DoctorInputForm(request.POST)
+        form = DoctorCreationForm(request.POST)
         if form.is_valid():
-            doctor_info = form.save(commit=False)  # Tworzy obiekt DoctorInfo na podstawie danych z formularza
-            doctor_info.user = request.user  # Przypisanie obiektu użytkownika do pola user
-            doctor_info.save()  # Zapisanie obiektu DoctorInfo w bazie danych
+            specializations = form.cleaned_data['specializations']
+            bio = form.cleaned_data['bio']
+            doctor_info = DoctorInfo.objects.create(user_id=request.user.id, bio=bio)
+            doctor_info.specializations.set(specializations)           
+            doctor_info.save()
             return redirect('index')
     else:
-        form = DoctorInputForm()
-    
+        form = DoctorCreationForm()
     return render(request, 'base/index.html', {'form': form})
 
 
