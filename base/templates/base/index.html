@@ -42,7 +42,7 @@
             <form method="post" action="{% url 'index' %}">
               {% csrf_token %}
               {{ form.specializations }}
-              {{form.bio}}
+              {{form.lorem}}
               <button type="submit" class="btn btn-primary">Zatwierdź</button>
           </form>        
         </div>

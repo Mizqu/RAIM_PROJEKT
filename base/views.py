@@ -17,7 +17,7 @@ def index(request):
         form = DoctorCreationForm(request.POST)
         if form.is_valid():
             specializations = form.cleaned_data['specializations']
-            bio = form.cleaned_data['bio']
+            bio = form.cleaned_data['lorem']
             doctor_info = DoctorInfo.objects.create(user_id=request.user.id, bio=bio)
             doctor_info.specializations.set(specializations)           
             doctor_info.save()
@@ -57,3 +57,17 @@ def logout_view(request):
         logout(request)
         return HttpResponseRedirect('/')
     
+def show_profile(request):
+    user = request.user
+    if user.isDoctor:
+        doctorctx = True
+        doctor_info = DoctorInfo.objects.get(user=user)
+    else:
+        doctorctx = False
+        doctor_info = None
+    context = {
+        'doctorCtx' : doctorctx,  
+        'user': user,
+        'doctorInfo': doctor_info
+    }
+    return render(request, 'base/profile.html' , context)
