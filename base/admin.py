@@ -13,6 +13,8 @@ class DoctorInfoAdmin(admin.ModelAdmin):
                 user = doctor_info.user
                 user.isDoctor = True
                 user.save()
+                doctor_info.approved = True
+                doctor_info.save()
     make_doctor.short_description = "Zatwierdź wybranych użytkowników"
     
     def get_actions(self, request):
