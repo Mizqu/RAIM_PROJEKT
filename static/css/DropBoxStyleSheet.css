@@ -1,14 +1,14 @@
 ul.no-bullets {
-    list-style-type: none; /* Remove bullets */
-    padding: 0; /* Remove padding */
-    margin: 0; /* Remove margins */
+    list-style-type: none; 
+    padding: 0; 
+    margin: 0; 
   }
 
 .no-bullets li {
     display: flex;
-    align-items: center; /* Wyśrodkowanie checkboxa i etykiety */
+    align-items: center; 
 }
 
 .no-bullets li input[type="checkbox"] {
-    margin-right: 10px; /* Doda odstęp między checkboxem a etykietą */
+    margin-right: 10px; 
 }

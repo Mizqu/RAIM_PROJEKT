@@ -1,5 +1,5 @@
 
-<!-- login.html -->
+{% include 'base/layout.html' %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,9 +12,18 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.60/jquery.min.js"></script>
   {% load static %}
 
+  <style>
+    .center-form {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+  </style>
 </head>
 
 <body>
+  <div class="center-form">
 {% block content %}
 <form method="post">
 {% csrf_token %}
@@ -25,7 +34,7 @@
 </form>
 {% endblock %}
 
-
+  </div>
 </body>
 
 </html>

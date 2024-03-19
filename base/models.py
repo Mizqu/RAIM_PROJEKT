@@ -7,6 +7,7 @@ from django.db import models
 
 class User(AbstractUser):
     isDoctor = models.BooleanField(default=False)
+    friends = models.ManyToManyField('self', symmetrical=True, default=None)
 
     
 class Specialization(models.Model):
@@ -24,6 +25,7 @@ class DoctorInfo(models.Model):
 
     def __str__(self):
         return self.user.username
+
 
 
     
