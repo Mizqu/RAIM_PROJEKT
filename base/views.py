@@ -11,6 +11,8 @@ from .models import Specialization
 import json
 from .models import DoctorInfo
 from .forms import DoctorCreationForm
+from .customfunctions import split_name
+
 
 def index(request):
     if request.method == 'POST':
@@ -24,7 +26,11 @@ def index(request):
             return redirect('index')
     else:
         form = DoctorCreationForm()
-    return render(request, 'base/index.html', {'form': form})
+    context = {
+        'form': form,
+        'Specializations': Specialization.objects.all()
+    }
+    return render(request, 'base/index.html', context)
 
 
 def login_view(request):
@@ -71,3 +77,19 @@ def show_profile(request):
         'doctorInfo': doctor_info
     }
     return render(request, 'base/profile.html' , context)
+   
+def doctorSearch(request): 
+    if request.method == 'GET':
+        full_name = request.GET.get('full_name')
+        specialization = request.GET.get('specialization')
+        first_name, last_name = split_name(full_name)
+    ListOfDoctors = []
+    for doctor_info in DoctorInfo.objects.filter(approved=True):
+        if doctor_info.user.first_name == first_name and doctor_info.user.last_name == last_name:
+            ListOfDoctors.append(doctor_info)
+        elif (doctor_info.specializations.filter(name=specialization).exists() and 
+              doctor_info not in ListOfDoctors):
+            ListOfDoctors.append(doctor_info)
+    ListOfDoctors = sorted(ListOfDoctors, key=lambda x: x.rate, reverse=True)
+
+    return render(request, 'base/doctorlist.html', {'ListOfDoctors': ListOfDoctors})
