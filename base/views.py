@@ -1,18 +1,14 @@
-from django.shortcuts import render
-from django.http import HttpResponse
-from .forms import CustomUserCreationForm
+from django.shortcuts import render, redirect
+from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
-from django.shortcuts import redirect
-import logging
-from .forms import CustomAuthenticationForm
+from django.shortcuts import render, redirect
 from django.urls import reverse
-from django.http import HttpResponseRedirect
-from .models import Specialization
-import json
-from .models import DoctorInfo
-from .forms import DoctorCreationForm
+from django.db import models
 from .customfunctions import split_name
-
+from .forms import CustomUserCreationForm, CustomAuthenticationForm, DoctorCreationForm, MessageForm
+from .models import Specialization, Message, DoctorInfo
+import logging
+import json
 
 def index(request):
     if request.method == 'POST':
@@ -93,3 +89,19 @@ def doctorSearch(request):
     ListOfDoctors = sorted(ListOfDoctors, key=lambda x: x.rate, reverse=True)
 
     return render(request, 'base/doctorlist.html', {'ListOfDoctors': ListOfDoctors})
+
+def chat(request):
+    if request.method == 'POST':
+        form = MessageForm(request.POST, user=request.user)
+        if form.is_valid():
+            form.save()
+            return redirect('chat')
+    else:
+        form = MessageForm(user=request.user)
+   
+    messages = Message.objects.filter(
+        models.Q(author=request.user) | models.Q(recipient=request.user)
+    )
+
+    return render(request, 'base/chat.html', {'messages': messages, 'form': form})
+

@@ -1,6 +1,6 @@
 from django.urls import path
 from base.views import index
-from base.views import login_view, register_view, logout_view, show_profile, doctorSearch
+from base.views import login_view, register_view, logout_view, show_profile, doctorSearch, chat
 from django.contrib.auth import views as auth_views
 from django.contrib.auth.views import LogoutView
 from . import views
@@ -13,4 +13,5 @@ urlpatterns = [
     path('logout/', logout_view, name='logout'),
     path('profile/', show_profile, name='profile' ),
     path('doctor_search/', doctorSearch, name='doctor_search'),
+    path('chat/', chat, name='chat'),
 ]

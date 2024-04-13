@@ -1,5 +1,5 @@
 from django import forms
-from .models import DoctorInfo
+from .models import DoctorInfo, Message
 from django.contrib.auth.forms import UserCreationForm
 from .models import User, Specialization
 from django.contrib.auth.forms import AuthenticationForm
@@ -37,4 +37,18 @@ class CustomAuthenticationForm(AuthenticationForm):
     class Meta:
         model = User
         fields = ['username', 'password']
-        
+
+
+class MessageForm(forms.ModelForm):
+    class Meta:
+        model = Message
+        fields = ['author', 'recipient', 'content']
+        widgets = {
+            'author': forms.HiddenInput(),
+        }
+
+    def __init__(self, *args, **kwargs):
+        self.user = kwargs.pop('user', None)
+        super(MessageForm, self).__init__(*args, **kwargs)
+        if self.user:
+            self.initial['author'] = self.user
