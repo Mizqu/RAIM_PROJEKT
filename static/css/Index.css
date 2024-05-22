@@ -1,0 +1,15 @@
+/* style.css */
+html, body {
+    height: 100%; /* Ustawia wysokość html i body na 100% */
+    margin: 0; /* Usuwa marginesy */
+}
+
+body {
+    background-image: url('images/indexbackground.jpeg'); /* Ścieżka do obrazu */
+    background-size: contain; /* Dopasowuje obraz do rozmiarów okna przeglądarki */
+    background-repeat: no-repeat; /* Zapobiega powtarzaniu obrazu */
+    background-position: top center; /* Ustawia obraz na górze i środku */
+    background-attachment: fixed; /* Ustawia obraz jako stałe tło */
+    font-family: Arial, sans-serif; /* Ustawia czcionkę */
+    color: #fff; /* Ustawia kolor tekstu */
+}
