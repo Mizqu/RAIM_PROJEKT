@@ -15,15 +15,18 @@
 </head>
 
 <body>
-{% block content %}
-<form method="post">
-{% csrf_token %}
+<div class="container mt-5">
+  <h2 class="mb-4">Logowanie</h2>
+  {% block content %}
+  <form method="post">
+  {% csrf_token %}
 
-{{ form.as_p }}
+  {{ form.as_p }}
+  <button type="submit" class="btn btn-primary">Zaloguj się</button>
+  </form>
+  {% endblock %}
+</div>
 
-<button type="submit">Zaloguj się</button>
-</form>
-{% endblock %}
 
 
 </body>
