@@ -7,6 +7,7 @@ from django.utils import timezone
 
 class User(AbstractUser):
     isDoctor = models.BooleanField(default=False)
+    friends = models.ManyToManyField('self', symmetrical=True, default=None)
 
     
 class Specialization(models.Model):
