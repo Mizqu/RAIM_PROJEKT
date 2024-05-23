@@ -1,0 +1,61 @@
+{% include 'base/layout.html' %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page Title</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel='stylesheet' type='text/css' media='screen' href="/static/css/ChatDisplay.css">
+  <link rel='stylesheet' type='text/css' media='screen' href="/static/css/DropBoxStyleSheet.css">
+</head>
+<body>
+
+
+<div class="container">
+    <h1 class="title">Chat Room</h1>
+    <div class="chat-box">
+        {% for message in messages %}
+        <p><strong>{{ message.author }}</strong> to <strong>{{ message.recipient }}</strong>: {{ message.content }}</p>
+        {% endfor %}
+    </div>
+    <div class="chat-write">
+        <form action="" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="author" value="{{ user.username }}">
+            <div class="receipienttextbox">
+                <input type="text" name="recipient">
+            </div>
+            <div class="contenttextbox">
+                <input type="text" name="content">    
+            </div>
+            <div class="sendbutton">
+                <button type="submit">Send</button>
+            </div>
+        </form>
+    </div>
+</div> 
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+
+<script>
+  $(document).ready(function() {
+    // Open the Search Modal when the button is clicked
+    $("#openSearchModal").click(function() {
+      $("#SearchModal").modal('show');
+    });
+
+    // Perform search logic when search button is clicked
+    $("#searchButton").click(function() {
+      // Here you can add logic to perform search
+    });
+  });
+</script>
+
+</body>
+</html>
+

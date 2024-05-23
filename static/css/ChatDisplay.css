@@ -1,0 +1,60 @@
+:root {
+
+	--hue: 310; /* change me (0-360) */
+	--hue-adjust: 135; /* and me */
+	--hue-2: calc(var(--hue) + var(--hue-adjust));
+
+  }
+
+    .container{   
+	    padding-top: 0px;  
+        position: absolute;
+        margin-left: 17%;
+        color: var(--text-base);
+	} 
+    
+    .title{
+        font: 80px Arial, sans-serif;
+        font-weight: bold;
+        text-transform: uppercase;
+        text-align: center;
+        letter-spacing: 0.4em;
+        margin-bottom: 40px;
+        padding-top: 40px;
+        padding-bottom: 40px;
+        background: #312450;
+        color: white;
+    }
+
+    .chat-box{
+        letter-spacing: 0.08em;
+        font: 20px Arial, sans-serif;
+    }
+
+    .chat-write{
+        position: fixed;
+        left: 17%;
+        bottom: 0;
+        width: 81%;
+        height: 10%;
+        margin-top: 60px;
+        margin-bottom: 10px;
+        padding: 10px, 10px;
+        background: #c4c4c4;
+    }
+
+    .receipienttextbox{
+        margin-top: 1%;
+        margin-left: 10px;
+    }
+
+    .contenttextbox{
+        margin-top: 2%;
+        margin-left: 10px;
+    }
+
+    .sendbutton{
+        position: relative;
+        margin-top: -2%;
+        left: 96%;
+    }
