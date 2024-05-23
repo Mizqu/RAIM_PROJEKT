@@ -105,3 +105,8 @@ def chat(request):
 
     return render(request, 'base/chat.html', {'messages': messages, 'form': form})
 
+def about(request):
+    if request.method == 'GET':
+        return render(request, 'base/aboutus.html')
+
+
