@@ -15,7 +15,11 @@
     <nav class="nav">
       <ul>
         <li class="active"><a href="{% url 'index' %}">Witaj</a></li>
+        {% if user.is_authenticated %}
         <li class="active"><a type="button" id="openSearchModal">Znajdź lekarza</a></li>
+        {% else %}
+        <li class="active"><a type="button" href="/register">Znajdź lekarza</a></li>
+        {% endif %}
         <li class="active"><a href="#">TO DO</a></li>
         <li class="active"><a href="{% url 'about' %}">Kim jesteśmy</a></li>      
       </ul>

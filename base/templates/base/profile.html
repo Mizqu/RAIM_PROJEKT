@@ -1,3 +1,5 @@
+{% include 'base/layout.html' %}
+
 <!DOCTYPE html>
 <html lang="pl">
 <head>
@@ -91,6 +93,7 @@
     </style>
 </head>
 <body>
+  {% if user.is_authenticated %}
     <div class="profile">
         <h2>Twój profil</h2>
         <div class="profile-info">
@@ -120,6 +123,9 @@
                 {{ doctorInfo.bio }}
             </div>
             {% endif %}
+            </div>
+      </div>
+      {% endif %}
         </div>
         <div>
           <button onclick="goBack()" class="button">Wróć</button>

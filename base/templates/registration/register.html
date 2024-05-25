@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+{% include 'base/layout.html' %}
+=======
+>>>>>>> 1e7e9966f001b42660b82d86beefe23817bca73c
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,9 +14,52 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   {% load static %}
 
+  <style>
+    .center-form {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+  </style>
 </head>
 
 <body>
+<<<<<<< HEAD
+  <div class="center-form">
+  {% block content %}
+  <form method="post">
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="{{ form.first_name.id_for_label }}">{{ form.first_name.label }}</label>
+        <br>
+        {{ form.first_name }}
+    </div>
+    <div class="form-group">
+        <label for="{{ form.last_name.id_for_label }}">{{ form.last_name.label }}</label>
+        <br>
+        {{ form.last_name }}
+    </div>
+    <div class="form-group">
+        <label for="{{ form.username.id_for_label }}">{{ form.username.label }}</label>
+        <br>
+        {{ form.username }}
+    </div>
+    <div class="form-group">
+        <label for="{{ form.password1.id_for_label }}">{{ form.password1.label }}</label>
+        <br>
+        {{ form.password1 }}
+    </div>
+    <div class="form-group">
+        <label for="{{ form.password2.id_for_label }}">{{ form.password2.label }}</label>
+        <br>
+        {{ form.password2 }}
+    </div>
+    <br>
+    <button type="submit">Zarejestruj się</button>
+</form>
+{% endblock %}
+=======
   <div class="container mt-5">
     <h2 class="mb-4">Rejestracja</h2>
     {% block content %}
@@ -32,6 +79,7 @@
           <label class="form-check-label" for="lekarz">Użytkownik-Lekarz</label>
         </div>
       </div>
+>>>>>>> 1e7e9966f001b42660b82d86beefe23817bca73c
 
       <button type="submit" class="btn btn-primary">Zarejestruj się</button>
     </form>
@@ -58,6 +106,12 @@
     </div>
   </div>
 
+<<<<<<< HEAD
+
+
+  </div>
+</body>
+=======
   <script>
     function validateForm() {
       const userType = document.querySelector('input[name="userType"]:checked');
@@ -75,3 +129,4 @@
   </script>
 </body>
 </html>
+>>>>>>> 1e7e9966f001b42660b82d86beefe23817bca73c
