@@ -1,7 +1,4 @@
-<<<<<<< HEAD
 {% include 'base/layout.html' %}
-=======
->>>>>>> 1e7e9966f001b42660b82d86beefe23817bca73c
 <!DOCTYPE html>
 <html>
 <head>
@@ -25,7 +22,6 @@
 </head>
 
 <body>
-<<<<<<< HEAD
   <div class="center-form">
   {% block content %}
   <form method="post">
@@ -59,31 +55,6 @@
     <button type="submit">Zarejestruj się</button>
 </form>
 {% endblock %}
-=======
-  <div class="container mt-5">
-    <h2 class="mb-4">Rejestracja</h2>
-    {% block content %}
-    <form id="registrationForm" method="post" onsubmit="return validateForm()">
-      {% csrf_token %}
-
-      {{ form.as_p }}
-
-      <div class="mb-3">
-        <label class="form-label">Wybierz typ użytkownika</label>
-        <div class="form-check">
-          <input class="form-check-input" type="radio" id="pacjent" name="userType" value="pacjent">
-          <label class="form-check-label" for="pacjent">Użytkownik-Pacjent</label>
-        </div>
-        <div class="form-check">
-          <input class="form-check-input" type="radio" id="lekarz" name="userType" value="lekarz">
-          <label class="form-check-label" for="lekarz">Użytkownik-Lekarz</label>
-        </div>
-      </div>
->>>>>>> 1e7e9966f001b42660b82d86beefe23817bca73c
-
-      <button type="submit" class="btn btn-primary">Zarejestruj się</button>
-    </form>
-    {% endblock %}
   </div>
 
   <!-- Modal -->
@@ -106,27 +77,7 @@
     </div>
   </div>
 
-<<<<<<< HEAD
 
 
   </div>
 </body>
-=======
-  <script>
-    function validateForm() {
-      const userType = document.querySelector('input[name="userType"]:checked');
-      if (!userType) {
-        alert('Proszę wybrać typ użytkownika');
-        return false; // Zapobiega wysłaniu formularza
-      }
-      if (userType.value === 'lekarz') {
-        const modal = new bootstrap.Modal(document.getElementById('DoctorModal'));
-        modal.show();
-        return false; // Zapobiega wysłaniu formularza rejestracyjnego, ale otwiera modal
-      }
-      return true; // Umożliwia wysłanie formularza rejestracyjnego dla pacjentów
-    }
-  </script>
-</body>
-</html>
->>>>>>> 1e7e9966f001b42660b82d86beefe23817bca73c
