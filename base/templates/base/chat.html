@@ -12,30 +12,32 @@
 </head>
 <body>
 
+  <div class="mainbody">
+    <div class="container">
+      <h1 class="title">Chat Room</h1>
+      <div class="chat-box">
+          {% for message in messages %}
+          <p><strong>{{ message.author }}</strong> do <strong>{{ message.recipient }}</strong>: {{ message.content }}</p>
+          {% endfor %}
+      </div>
+      <div class="chat-write">
+          <form action="" method="post">
+              {% csrf_token %}
+              <input type="hidden" name="author" value="{{ user.username }}">
+              <div class="receipienttextbox">
+                  <input type="text" name="recipient" placeholder="Adresat">
+              </div>
+              <div class="contenttextbox">
+                  <input type="text" name="content" placeholder="Treść wiadomości">    
+              </div>
+              <div class="sendbutton">
+                  <button type="submit">Wyślij</button>
+              </div>
+          </form>
+      </div>
+    </div> 
+  </div>
 
-<div class="container">
-    <h1 class="title">Chat Room</h1>
-    <div class="chat-box">
-        {% for message in messages %}
-        <p><strong>{{ message.author }}</strong> to <strong>{{ message.recipient }}</strong>: {{ message.content }}</p>
-        {% endfor %}
-    </div>
-    <div class="chat-write">
-        <form action="" method="post">
-            {% csrf_token %}
-            <input type="hidden" name="author" value="{{ user.username }}">
-            <div class="receipienttextbox">
-                <input type="text" name="recipient">
-            </div>
-            <div class="contenttextbox">
-                <input type="text" name="content">    
-            </div>
-            <div class="sendbutton">
-                <button type="submit">Send</button>
-            </div>
-        </form>
-    </div>
-</div> 
 
 
 
