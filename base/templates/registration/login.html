@@ -1,4 +1,3 @@
-
 {% include 'base/layout.html' %}
 <!DOCTYPE html>
 <html>
@@ -28,7 +27,7 @@
   {% block content %}
   <form method="post">
   {% csrf_token %}
-
+    
   {{ form.as_p }}
   <button type="submit" class="btn btn-primary">Zaloguj się</button>
   </form>

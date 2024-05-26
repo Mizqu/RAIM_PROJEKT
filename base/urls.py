@@ -13,6 +13,11 @@ urlpatterns = [
     path('logout/', logout_view, name='logout'),
     path('profile/', show_profile, name='profile' ),
     path('doctor_search/', doctorSearch, name='doctor_search'),
+    
     path('chat/', chat, name='chat'),
+    path('new/', views.new_chat, name='new_chat'),
+    path('list/', views.chat_list, name='chat_list'),
+    path('chat/<str:recipient>/', views.chat, name='chat_with_recipient'),
+    
     path('about/', about, name='about'),
 ]
