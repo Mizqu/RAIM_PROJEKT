@@ -12,13 +12,22 @@
 <body>
   <div class="mainbody">
     <div class="container">
-      <h1 class="title">New Chat</h1>
-      <form method="post">
+      <h1 class="title">Nowy czat</h1>
+      <form action="" method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="btn btn-primary">Send</button>
-        <a href="{% url 'chat_list' %}" class="btn btn-secondary mt-3">Back to Chat List</a>
-      </form>
+        <input type="hidden" name="author" value="{{ user.username }}">
+        <div class="contenttextbox">
+          <input type="text" name="recipient" placeholder="Adresat" required>
+        </div>
+        <div class="contenttextbox">
+            <input type="text" name="content" placeholder="Treść wiadomości" required>    
+        </div>
+        <input type="file" name="file">
+        <div class="sendbutton">
+            <button type="submit" class="btn btn-success">Wyślij</button>
+        </div>
+    </form>
+      <a href="{% url 'chat_list' %}" class="btn btn-secondary mt-3">Lista czatów</a>
     </div>
   </div>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>

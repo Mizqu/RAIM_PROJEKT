@@ -5,7 +5,7 @@ html, body {
 }
 
 body {
-    background-image: url('images/indexbackground.jpeg'); /* Ścieżka do obrazu */
+    background-image: url('images/indexbackground.jpeg'), linear-gradient(to right, #312450 90%, #6d50af 100%); /* Ścieżka do obrazu */
     background-size: contain; /* Dopasowuje obraz do rozmiarów okna przeglądarki */
     background-repeat: no-repeat; /* Zapobiega powtarzaniu obrazu */
     background-position: top center; /* Ustawia obraz na górze i środku */

@@ -28,11 +28,12 @@ class DoctorInfo(models.Model):
 
 
 class Message(models.Model):
-    author = models.CharField(max_length=100)
-    recipient = models.CharField(max_length=100)
-    content = models.TextField()
-    timestamp = models.DateTimeField(default=timezone.now)
+    author = models.CharField(max_length=100)       # Autor wiadomości
+    recipient = models.CharField(max_length=100)    # Odbiorca wiadomości
+    content = models.TextField()    # Zawartość wiadomości
+    timestamp = models.DateTimeField(default=timezone.now)      # Czas wysłania wiadomości
+    file = models.FileField(upload_to='chat_files/', blank=True, null=True)     # Plik
 
     def __str__(self):
-        return f'{self.author} -> {self.recipient}: {self.content}'
+        return f'{self.author} -> {self.recipient}: {self.content or self.file.name}'
 
