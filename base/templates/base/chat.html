@@ -12,10 +12,10 @@
 <body>
   <div class="mainbody">
     <div class="container">
-      <h1 class="title">Chat Room with {{ recipient }}</h1>
+      <h1 class="title">{{ recipient }}</h1>
       <div class="chat-box">
           {% for message in messages %}
-          <p><strong>{{ message.author }}</strong> to <strong>{{ message.recipient }}</strong>: {{ message.content }}</p>
+          <p><i>{{ message.timestamp }}</i><br><strong>{{ message.author }}</strong> do <strong>{{ message.recipient }}</strong>: {{ message.content }}</p>
           {% endfor %}
       </div>
       <div class="chat-write">
@@ -27,11 +27,11 @@
                   <input type="text" name="content" placeholder="Message" required>    
               </div>
               <div class="sendbutton">
-                  <button type="submit" class="btn btn-success">Send</button>
+                  <button type="submit" class="btn btn-success">Wyślij</button>
               </div>
           </form>
       </div>
-      <a href="{% url 'chat_list' %}" class="btn btn-secondary mt-3">Back to Chat List</a>
+      <a href="{% url 'chat_list' %}" class="btn btn-secondary mt-3">Lista czatów</a>
     </div>
   </div>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>

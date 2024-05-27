@@ -5,22 +5,20 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Chat List</title>
+  <title>Lista czatów</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel='stylesheet' type='text/css' media='screen' href="/static/css/ChatDisplay.css">
 </head>
 <body>
   <div class="mainbody">
     <div class="container">
-      <h1 class="title">Chat List</h1>
+      <h1 class="title">Lista czatów</h1>
       <div class="list-group">
           {% for user_name in chat_list %}
-          <a href="{% url 'chat_with_recipient' recipient=user_name %}" class="list-group-item list-group-item-action">
-              Chat with {{ user_name }}
-          </a>
+          <a href="{% url 'chat_with_recipient' recipient=user_name %}" class="list-group-item list-group-item-action">{{ user_name }}</a>
           {% endfor %}
       </div>
-      <a href="{% url 'new_chat' %}" class="btn btn-primary mt-3">Start New Chat</a>
+      <a href="{% url 'new_chat' %}" class="btn btn-primary mt-3">Nowy czat</a>
     </div>
   </div>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>

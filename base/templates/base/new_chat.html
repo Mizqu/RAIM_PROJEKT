@@ -12,13 +12,13 @@
 <body>
   <div class="mainbody">
     <div class="container">
-      <h1 class="title">New Chat</h1>
+      <h1 class="title">Nowy czat</h1>
       <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit" class="btn btn-primary">Send</button>
-        <a href="{% url 'chat_list' %}" class="btn btn-secondary mt-3">Back to Chat List</a>
+        <button type="submit" class="btn btn-success">Wyślij</button>
       </form>
+      <a href="{% url 'chat_list' %}" class="btn btn-secondary mt-3">Lista czatów</a>
     </div>
   </div>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
