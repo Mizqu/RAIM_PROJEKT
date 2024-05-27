@@ -1,8 +1,6 @@
 from django import forms
-from .models import DoctorInfo, Message
-from django.contrib.auth.forms import UserCreationForm
-from .models import User, Specialization
-from django.contrib.auth.forms import AuthenticationForm
+from .models import User, Specialization, DoctorInfo, Message
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 import json
 
 class DoctorCreationForm(forms.Form):
@@ -42,9 +40,11 @@ class CustomAuthenticationForm(AuthenticationForm):
 class MessageForm(forms.ModelForm):
     class Meta:
         model = Message
-        fields = ['author', 'recipient', 'content']
+        fields = ['author', 'recipient', 'content', 'file']
         widgets = {
             'author': forms.HiddenInput(),
+            'recipient': forms.HiddenInput,
+            'content': forms.TextInput(attrs={'placeholder': 'Treść wiadomości'}),
         }
 
     def __init__(self, *args, **kwargs):

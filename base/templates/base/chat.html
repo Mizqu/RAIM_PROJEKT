@@ -15,17 +15,25 @@
       <h1 class="title">{{ recipient }}</h1>
       <div class="chat-box">
           {% for message in messages %}
-          <p><i>{{ message.timestamp }}</i><br><strong>{{ message.author }}</strong> do <strong>{{ message.recipient }}</strong>: {{ message.content }}</p>
+          <p><i>{{ message.timestamp }}</i><br><strong>{{ message.author }}</strong> do <strong>{{ message.recipient }}</strong>: 
+            {% if message.content %}
+                  {{ message.content }}
+              {% endif %}
+              {% if message.file %}
+                <a href="{{ message.file.url}}" download>{{ message.file.name|cut:"chat_files/"}}</a>
+              {% endif %}
+          </p>
           {% endfor %}
       </div>
       <div class="chat-write">
-          <form action="" method="post">
+          <form action="" method="post" enctype="multipart/form-data">
               {% csrf_token %}
               <input type="hidden" name="author" value="{{ user.username }}">
               <input type="hidden" name="recipient" value="{{ recipient }}">
               <div class="contenttextbox">
                   <input type="text" name="content" placeholder="Message" required>    
               </div>
+              <input type="file" name="file">
               <div class="sendbutton">
                   <button type="submit" class="btn btn-success">Wyślij</button>
               </div>

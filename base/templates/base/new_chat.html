@@ -13,11 +13,20 @@
   <div class="mainbody">
     <div class="container">
       <h1 class="title">Nowy czat</h1>
-      <form method="post">
+      <form action="" method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="btn btn-success">Wyślij</button>
-      </form>
+        <input type="hidden" name="author" value="{{ user.username }}">
+        <div class="contenttextbox">
+          <input type="text" name="recipient" placeholder="Adresat" required>
+        </div>
+        <div class="contenttextbox">
+            <input type="text" name="content" placeholder="Treść wiadomości" required>    
+        </div>
+        <input type="file" name="file">
+        <div class="sendbutton">
+            <button type="submit" class="btn btn-success">Wyślij</button>
+        </div>
+    </form>
       <a href="{% url 'chat_list' %}" class="btn btn-secondary mt-3">Lista czatów</a>
     </div>
   </div>

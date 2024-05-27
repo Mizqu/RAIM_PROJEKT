@@ -5,6 +5,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.db import models
 from django.db.models import Q
+from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User 
 from .customfunctions import split_name
@@ -104,25 +105,27 @@ def chat_list(request):
     chat_list = []
     for conversation in conversations:
         other_user_name = conversation[0] if conversation[0] != user.username else conversation[1]
-        chat_list.append(other_user_name)
+        if other_user_name != user.username:
+            chat_list.append(other_user_name)
 
     return render(request, 'base/chat_list.html', {'chat_list': chat_list})
 
 @login_required
 def chat(request, recipient=None):
+    user = request.user
     if request.method == 'POST':
-        form = MessageForm(request.POST, user=request.user)
-        if form.is_valid():
-            form.save()
-            return redirect('chat_with_recipient', recipient=form.cleaned_data['recipient'])
-    else:
-        form = MessageForm(user=request.user)
+        author = request.POST.get('author')
+        recipient = request.POST.get('recipient')
+        content = request.POST.get('content', '')
+        file = request.FILES.get('file')
 
-    messages = Message.objects.filter(
-        (Q(author=request.user) & Q(recipient=recipient)) |
-        (Q(author=recipient) & Q(recipient=request.user))
-    ).order_by('timestamp')
-    return render(request, 'base/chat.html', {'messages': messages, 'form': form, 'recipient': recipient})
+        message = Message(author=author, recipient=recipient, content=content, timestamp=timezone.now(), file=file)
+        message.save()
+        return redirect('chat_with_recipient', recipient=recipient)
+
+    messages = Message.objects.filter(author=user.username) | Message.objects.filter(recipient=user.username)
+    messages = messages.order_by('timestamp')
+    return render(request, 'base/chat.html', {'messages': messages, 'recipient': recipient})
 
 @login_required
 def new_chat(request):
