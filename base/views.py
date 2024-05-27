@@ -123,7 +123,10 @@ def chat(request, recipient=None):
         message.save()
         return redirect('chat_with_recipient', recipient=recipient)
 
-    messages = Message.objects.filter(author=user.username) | Message.objects.filter(recipient=user.username)
+    messages = Message.objects.filter(
+        (Q(author=request.user) & Q(recipient=recipient)) |
+        (Q(author=recipient) & Q(recipient=request.user))
+    ).order_by('timestamp')
     messages = messages.order_by('timestamp')
     return render(request, 'base/chat.html', {'messages': messages, 'recipient': recipient})
 
