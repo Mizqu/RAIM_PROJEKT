@@ -125,9 +125,10 @@ def chat(request, recipient=None):
         return redirect('chat_with_recipient', recipient=recipient)
 
     # Wyświetlanie jedynie tych wiadomości, w których aktualny użytkownik jest autorem lub odbiorcą
-    messages = Message.objects.filter(author=user.username) | Message.objects.filter(recipient=user.username)
-    # Wyświetlanie wiadomości posortowanych według czasu wysłania
-    messages = messages.order_by('timestamp')
+    messages = Message.objects.filter(
+        (Q(author=request.user) & Q(recipient=recipient)) |
+        (Q(author=recipient) & Q(recipient=request.user))
+    ).order_by('timestamp')  # Wyświetlanie wiadomości posortowanych według czasu wysłania
     return render(request, 'base/chat.html', {'messages': messages, 'recipient': recipient})
 
 # Okno "Kim jesteśmy"
