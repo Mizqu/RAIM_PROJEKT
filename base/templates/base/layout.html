@@ -20,7 +20,11 @@
         {% else %}
         <li class="active"><a type="button" href="/register">Znajdź lekarza</a></li>
         {% endif %}
-        <li class="active"><a href="#">TO DO</a></li>
+        {% if user.is_authenticated %}
+        <li class="active"><a type="button" id="openDoctorModal">Zarejestruj się jako lekarz</a></li>
+        {% else %}
+        <li class="active"><a type="button" href="/register">Zarejestruj się jako lekarz</a></li>
+        {% endif %}
         <li class="active"><a href="{% url 'about' %}">Kim jesteśmy</a></li>      
       </ul>
     </nav>
@@ -61,10 +65,31 @@
   </div>
 </nav>
 
-<!-- Add your content here -->
+<div class="modal fade" id="DoctorModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Wypełnij formularz</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">  
+        <form method="post" action="{% url 'index' %}">
+          {% csrf_token %}
+          {{ form.specializations }}
+        </br>
+          <h2>Przekonaj nas do siebie</h2>
+          {{form.encouragement}}
+          <button type="submit" class="btn btn-primary">Zatwierdź</button>
+        </form>        
+      </div>
+    </div>
+  </div>
+</div>
+
+
 <script>
   $(document).ready(function(){
-    // Funkcja do otwierania/zamykania dropdowna
+
     function toggleDropdown() {
       var dropdown = document.getElementById('navbarDropdown');
       var dropdownMenu = dropdown.nextElementSibling;
@@ -79,7 +104,6 @@
       }
     }
 
-    // Obsługa kliknięcia przycisku dropdowna
     $('#navbarDropdown').on('click', function(event){
       event.preventDefault();
       toggleDropdown();
@@ -92,6 +116,19 @@
       }
     });
   });
+ 
+  $(document).ready(function() {
+    // Open the Search Modal when the button is clicked
+    $("#openDoctorModal").click(function() {
+      $("#DoctorModal").modal('show');
+    });
+
+    // Perform search logic when search button is clicked
+    $("#searchButton").click(function() {
+      // Here you can add logic to perform search
+    });
+  });
+
 </script>
 </body>
 </html>

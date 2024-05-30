@@ -20,40 +20,40 @@ User = get_user_model()
 def index(request):
     if request.method == 'POST':
         form = DoctorCreationForm(request.POST)
-        if form.is_valid():
-            specializations = form.cleaned_data['specializations']
-            bio = form.cleaned_data['lorem']
-            doctor_info = DoctorInfo.objects.create(user_id=request.user.id, bio=bio)
+        if form.is_valid(): # specjalizacje wybrane przez użytkownika (przyszłego lekarza) są wyciągane z formularza, jego przekonywujący tekst również i na tej podstawie 
+            specializations = form.cleaned_data['specializations']  # tworzona jest prośba o możliwość zostania lekarzem która ląduje w bazie danych i admin ją zatwierdza bądź nie
+            encouragement = form.cleaned_data['encouragement']
+            doctor_info = DoctorInfo.objects.create(user_id=request.user.id, encouragement=encouragement)
             doctor_info.specializations.set(specializations)           
             doctor_info.save()
             return redirect('index')
     else:
         form = DoctorCreationForm()
     context = {
-        'form': form,
-        'Specializations': Specialization.objects.all()
+        'form': form, # pobierane są z bazy danych wszystkie specjalizacje  i wysyłane do contextu który przekazywany jest do widoku, jest to po to aby w modalu wyświetlić
+        'Specializations': Specialization.objects.all() # wszystkie możliwe specjalizacje przy rejestracji lekarza
     }
     return render(request, 'base/index.html', context)
 
 
 def login_view(request):
     if request.method == 'POST':
-        form = CustomAuthenticationForm(request, data=request.POST)
+        form = CustomAuthenticationForm(request, data=request.POST) # formularz ktory jest w widoku login.html przekazywany jest do tej metody
         if form.is_valid():
-            username = form.cleaned_data.get('username')
+            username = form.cleaned_data.get('username') # pobierane są username, password i użytkownik jest logowany
             password = form.cleaned_data.get('password')
             user = authenticate(request, username=username, password=password)
             if user is not None:
-                login(request, user)
+                login(request, user) # jeśli autentykacja powiedzie się użytkownik przekierowywany jest na index.html
                 return redirect(reverse('index'))   
     else:
         form = CustomAuthenticationForm()
     return render(request, 'login.html', {'form': form})
 
 def register_view(request):
-    if request.method == 'POST':
+    if request.method == 'POST': # formularz ktory jest w widoku register.html przekazywany jest do tej metody
         form = CustomUserCreationForm(request.POST)
-        if form.is_valid():
+        if form.is_valid(): # jesli dane z inputów w register.html odpowiadają typom danych z formularza to użytkownik jest tworzony i zapisywany do bazy danych, następnie wraca do index.html
             user = form.save()
             return redirect(reverse('login'))  
     else:
@@ -63,12 +63,12 @@ def register_view(request):
 
 def logout_view(request):
     if request.method == 'GET':
-        logout(request)
+        logout(request) 
         return HttpResponseRedirect('/')
     
 def show_profile(request):
-    user = request.user
-    if user.isDoctor:
+    user = request.user # jeśli użytkownik wykonujący request pokazania profilu jest lekarzem to flaga doctorctx jest true i przekazywany jest odpowiedni kontekst tak aby można 
+    if user.isDoctor:                                   # było pobrać dodatkowo specjalizacje i bio lekarza
         doctorctx = True
         doctor_info = DoctorInfo.objects.get(user=user)
     else:
@@ -82,10 +82,10 @@ def show_profile(request):
     return render(request, 'base/profile.html' , context)
    
 def doctorSearch(request): 
-    if request.method == 'GET':
-        full_name = request.GET.get('full_name')
-        specialization = request.GET.get('specialization')
-        first_name, last_name = split_name(full_name)
+    if request.method == 'GET':   
+        full_name = request.GET.get('full_name') # Użytkownik może wpisać imie i nazwisko lekarza i/lub wybiera specjalizacje która go interesuje, następnie full_name jest dzielone 
+        specialization = request.GET.get('specialization') # na first_name i last_name a następnie szukani są w bazie danych lekarze którzy mają podany first_name last_name i specjalizacje
+        first_name, last_name = split_name(full_name) # dodawani są do listy i przekazywani do widoku
     ListOfDoctors = []
     for doctor_info in DoctorInfo.objects.filter(approved=True):
         if doctor_info.user.first_name == first_name and doctor_info.user.last_name == last_name:
