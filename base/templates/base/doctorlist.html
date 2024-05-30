@@ -1,0 +1,63 @@
+{% include 'base/layout.html' %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Page Title</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" media="screen" href="/static/css/ProfilesDisplay.css"> 
+</head>
+<body>
+    <div>
+        {% for doctorInfo in ListOfDoctors %}
+        <div class="container mt-5">
+    
+            <div class="row d-flex justify-content-center">
+                
+                <div class="col-md-7">
+                    
+                    <div class="card p-3 py-4">
+                        
+                        <div>
+                            <img src="https://i.imgur.com/bDLhJiP.jpg" width="150" class="rounded-circle">
+                        </div>
+                        
+                        <div class="text-center mt-3">
+                            <span class="bg-secondary p-1 px-4 rounded text-white rate">{{doctorInfo.rate}}</span>
+                            <h5 class="mt-2 mb-0">{{doctorInfo.user.first_name}} 
+                                <span>{{doctorInfo.user.last_name}}</span>
+                            </h5>
+                            <div class="specializations">
+                            <ul class="no-bullets">
+                                {% for specialization in doctorInfo.specializations.all %}
+                                <li><span>{{specialization}}</span></li>
+                                {% endfor %}
+                            </ul>
+                            </div>
+                            
+                            
+                            <div class="px-4 mt-1">
+                                <p class="fonts">{{doctorInfo.bio}} </p>                          
+                            </div>
+                            <div class="buttons">                                
+                                <form method="post" action="{% url 'start_conversation' %}">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="user_id" value="{{ doctorInfo.user.id }}">
+                                    <button type="submit" class="btn btn-outline-primary px-4">Rozpocznij konwersację</button>
+                                </form>
+                            </div>                                             
+                        </div>                    
+                    </div>                   
+                </div>               
+            </div>          
+        </div>
+        {% endfor %}
+    </div>
+</body>
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel='stylesheet' type='text/css' media='screen' href="/static/css/NavbarStyleSheet.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+  <aside class="sidebar">
+    <nav class="nav">
+      <ul>
+        <li class="active"><a href="{% url 'index' %}">Witaj</a></li>
+        {% if user.is_authenticated %}
+        <li class="active"><a type="button" id="openSearchModal">Znajdź lekarza</a></li>
+        {% else %}
+        <li class="active"><a type="button" href="/register">Znajdź lekarza</a></li>
+        {% endif %}
+        <li class="active"><a href="#">TO DO</a></li>
+        <li class="active"><a href="{% url 'about' %}">Kim jesteśmy</a></li>      
+      </ul>
+    </nav>
+  </aside>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+      <ul class="navbar-nav">
+        {% if user.is_authenticated %}
+        <li class="nav-item dropdown">
+          <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="navbarDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+            Konto
+          </a>       
+          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" href="/profile">Pokaż profil</a></li>
+            <li><a class="dropdown-item" href="#">Another action</a></li>
+            <li><a class="dropdown-item" href="/logout">Wyloguj się</a></li>
+          </ul>
+        </li>
+        <li class="nav-item">
+          <a href="/list" class="btn btn-success custom-btn">Chat</a>
+        </li>
+        {% else %}
+        <li class="nav-item">
+          <a href="/login" class="btn btn-success custom-btn">Zaloguj się</a>
+        </li>
+        <li class="nav-item">
+          <a href="/register" class="btn btn-success custom-btn">Zarejestruj się</a>
+        </li>
+        {% endif %}
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Add your content here -->
+<script>
+  $(document).ready(function(){
+    // Funkcja do otwierania/zamykania dropdowna
+    function toggleDropdown() {
+      var dropdown = document.getElementById('navbarDropdown');
+      var dropdownMenu = dropdown.nextElementSibling;
+      var isOpen = dropdown.classList.contains('show');
+      
+      if (!isOpen) {
+        dropdown.classList.add('show');
+        dropdownMenu.classList.add('show');
+      } else {
+        dropdown.classList.remove('show');
+        dropdownMenu.classList.remove('show');
+      }
+    }
+
+    // Obsługa kliknięcia przycisku dropdowna
+    $('#navbarDropdown').on('click', function(event){
+      event.preventDefault();
+      toggleDropdown();
+    });
+    
+    // Obsługa kliknięcia poza dropdownem
+    $(document).on('click', function(event){
+      if (!$(event.target).closest('.dropdown').length) {
+        $('.dropdown-menu').removeClass('show');
+      }
+    });
+  });
+</script>
+</body>
+</html>

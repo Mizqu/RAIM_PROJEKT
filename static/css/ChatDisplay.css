@@ -1,0 +1,83 @@
+:root {
+    --primary-color: #6a11cb;
+    --secondary-color: #2575fc;
+    --text-color: #fff;
+    --button-bg-color: #28a745;
+    --button-hover-color: #218838;
+}
+
+.mainbody {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+}
+
+.container {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    width: 60%;
+    max-width: 800px;
+    text-align: center;
+}
+
+.title {
+    font-size: 2em;
+    margin-bottom: 20px;
+    color: var(--primary-color);
+}
+
+.chat-box {
+    max-height: 500px; /* Increased max-height */
+    height: 400px; /* Set a fixed height */
+    overflow-y: auto;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 10px;
+    background: #f9f9f9;
+    
+}
+
+.chat-box p {
+    margin: 10px 0;
+    text-align: left;
+    word-wrap: break-word; /* Ensure long words break correctly */
+}
+
+.chat-write form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.receipienttextbox input,
+.contenttextbox input {
+    width: calc(100% - 20px);
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.receipienttextbox input::placeholder,
+.contenttextbox input::placeholder {
+    color: #aaa;
+}
+
+.sendbutton button {
+    padding: 10px;
+    background-color: var(--button-bg-color);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.sendbutton button:hover {
+    background-color: var(--button-hover-color);
+}

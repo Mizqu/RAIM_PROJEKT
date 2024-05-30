@@ -1,0 +1,26 @@
+{% include 'base/layout.html' %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lista czatów</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel='stylesheet' type='text/css' media='screen' href="/static/css/ChatDisplay.css">
+</head>
+<body>
+  <div class="mainbody">
+    <div class="container">
+      <h1 class="title">Lista czatów</h1>
+      <div class="list-group">
+          {% for friend in friends%}
+          <a href="{% url 'chat_with_recipient' recipient=friend.username %}" class="list-group-item list-group-item-action">{{ friend.first_name }} {{ friend.last_name }}</a>
+          {% endfor %}
+      </div>
+    </div>
+  </div>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+</body>
+</html>
