@@ -1,6 +1,6 @@
 from django.urls import path
 from base.views import index
-from base.views import login_view, register_view, logout_view, show_profile, doctorSearch, chat, about
+from base.views import login_view, register_view, logout_view, show_profile, doctorSearch, chat, about, start_conversation
 from django.contrib.auth import views as auth_views
 from django.contrib.auth.views import LogoutView
 from . import views
@@ -15,9 +15,9 @@ urlpatterns = [
     path('doctor_search/', doctorSearch, name='doctor_search'),
     
     path('chat/', chat, name='chat'),
-    path('new/', views.new_chat, name='new_chat'),
     path('list/', views.chat_list, name='chat_list'),
     path('chat/<str:recipient>/', views.chat, name='chat_with_recipient'),
     
     path('about/', about, name='about'),
+    path('start_conversation/', start_conversation, name='start_conversation')
 ]

@@ -45,11 +45,13 @@
                             <div class="px-4 mt-1">
                                 <p class="fonts">{{doctorInfo.bio}} </p>                          
                             </div>
-                            <div class="buttons">
-                                
-                                <button class="btn btn-outline-primary px-4">Dodaj do znajomych</button>
-                                <button class="btn btn-primary px-4 ms-3">Czatuj</button>
-                            </div>                                                    
+                            <div class="buttons">                                
+                                <form method="post" action="{% url 'start_conversation' %}">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="user_id" value="{{ doctorInfo.user.id }}">
+                                    <button type="submit" class="btn btn-outline-primary px-4">Rozpocznij konwersację</button>
+                                </form>
+                            </div>                                             
                         </div>                    
                     </div>                   
                 </div>               

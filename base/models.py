@@ -7,7 +7,7 @@ from django.utils import timezone
 
 class User(AbstractUser):
     isDoctor = models.BooleanField(default=False)
-    friends = models.ManyToManyField('self', symmetrical=True, default=None)
+    friends = models.ManyToManyField('self', blank=True)
 
     
 class Specialization(models.Model):
@@ -36,4 +36,3 @@ class Message(models.Model):
 
     def __str__(self):
         return f'{self.author} -> {self.recipient}: {self.content or self.file.name}'
-
