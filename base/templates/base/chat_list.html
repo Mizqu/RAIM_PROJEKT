@@ -14,11 +14,10 @@
     <div class="container">
       <h1 class="title">Lista czatów</h1>
       <div class="list-group">
-          {% for user_name in chat_list %}
-          <a href="{% url 'chat_with_recipient' recipient=user_name %}" class="list-group-item list-group-item-action">{{ user_name }}</a>
+          {% for friend in friends%}
+          <a href="{% url 'chat_with_recipient' recipient=friend.username %}" class="list-group-item list-group-item-action">{{ friend.first_name }} {{ friend.last_name }}</a>
           {% endfor %}
       </div>
-      <a href="{% url 'new_chat' %}" class="btn btn-primary mt-3">Nowy czat</a>
     </div>
   </div>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>

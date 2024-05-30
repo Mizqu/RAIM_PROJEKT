@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect
@@ -13,6 +13,9 @@ from .forms import CustomUserCreationForm, CustomAuthenticationForm, DoctorCreat
 from .models import Specialization, Message, DoctorInfo
 import logging
 import json
+from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth import get_user_model
+User = get_user_model()
 
 def index(request):
     if request.method == 'POST':
@@ -99,16 +102,12 @@ def chat_list(request):
     user = request.user
 
     # Pobieramy wszystkie unikalne konwersacje, w których uczestniczy użytkownik
-    conversations = Message.objects.filter(Q(author=user) | Q(recipient=user)).values_list('author', 'recipient').distinct()
+    friends = user.friends.all()
 
-    # Tworzymy listę czatów, gdzie każdy czat zawiera nazwę drugiego użytkownika
-    chat_list = []
-    for conversation in conversations:
-        other_user_name = conversation[0] if conversation[0] != user.username else conversation[1]
-        if other_user_name != user.username:
-            chat_list.append(other_user_name)
+    # Tworzymy listę czatów, gdzie każdy czat zawiera nazwę przyjaciela
 
-    return render(request, 'base/chat_list.html', {'chat_list': chat_list})
+
+    return render(request, 'base/chat_list.html', {'friends': friends})
 
 @login_required
 def chat(request, recipient=None):
@@ -123,26 +122,23 @@ def chat(request, recipient=None):
         message.save()
         return redirect('chat_with_recipient', recipient=recipient)
 
-    messages = Message.objects.filter(
-        (Q(author=request.user) & Q(recipient=recipient)) |
-        (Q(author=recipient) & Q(recipient=request.user))
-    ).order_by('timestamp')
+    messages = Message.objects.filter(author=user.username) | Message.objects.filter(recipient=user.username)
     messages = messages.order_by('timestamp')
     return render(request, 'base/chat.html', {'messages': messages, 'recipient': recipient})
 
-@login_required
-def new_chat(request):
-    if request.method == 'POST':
-        form = MessageForm(request.POST, user=request.user)
-        if form.is_valid():
-            form.save()
-            return redirect('chat_with_recipient', recipient=form.cleaned_data['recipient'])
-    else:
-        form = MessageForm(user=request.user)
-    return render(request, 'base/new_chat.html', {'form': form})
+
 
 def about(request):
     if request.method == 'GET':
         return render(request, 'base/aboutus.html')
-
-
+    
+@csrf_exempt
+def start_conversation(request):
+    if request.method == 'POST':
+        current_user = request.user
+        doctor_id = request.POST.get('user_id')
+        doctor = User.objects.get(pk=doctor_id)
+        current_user.friends.add(doctor)
+        current_user.save()
+        return redirect(reverse('chat_list'))
+    return redirect('base/chat.html')
