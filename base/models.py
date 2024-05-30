@@ -4,14 +4,14 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.utils import timezone
 
-
+# Model użytkownika
 class User(AbstractUser):
     isDoctor = models.BooleanField(default=False)
     friends = models.ManyToManyField('self', blank=True)
 
-    
+# Model specjalizacji    
 class Specialization(models.Model):
-    name = models.CharField(max_length = 30, null=False)
+    name = models.CharField(max_length = 30, null=False) # Max długość specjalizacji to 30 znaków
     def __str__(self):
         return self.name
 
@@ -26,7 +26,7 @@ class DoctorInfo(models.Model):
     def __str__(self):
         return self.user.username
 
-
+# Model wiadomości
 class Message(models.Model):
     author = models.CharField(max_length=100)       # Autor wiadomości
     recipient = models.CharField(max_length=100)    # Odbiorca wiadomości

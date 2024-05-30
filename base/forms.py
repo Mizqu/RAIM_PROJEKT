@@ -36,19 +36,19 @@ class CustomAuthenticationForm(AuthenticationForm):
         model = User
         fields = ['username', 'password']
 
-
+# Formularz wiadomości
 class MessageForm(forms.ModelForm):
     class Meta:
         model = Message
-        fields = ['author', 'recipient', 'content', 'file']
+        fields = ['author', 'recipient', 'content', 'file'] # Pola na autora, odbiorcę, zawartość i plik
         widgets = {
-            'author': forms.HiddenInput(),
-            'recipient': forms.HiddenInput,
-            'content': forms.TextInput(attrs={'placeholder': 'Treść wiadomości'}),
+            'author': forms.HiddenInput(),  # Do autora nie można nic wpisać - autorem zawsze jest aktualnie zalogowany użytkownik
+            'recipient': forms.HiddenInput, # Tak samo do odbiorcy, odbiorcę wybiera się z listy - nie powinno się go ręcznie wpisywać
+            'content': forms.TextInput(attrs={'placeholder': 'Treść wiadomości'}),  # Zawartość
         }
 
     def __init__(self, *args, **kwargs):
         self.user = kwargs.pop('user', None)
         super(MessageForm, self).__init__(*args, **kwargs)
         if self.user:
-            self.initial['author'] = self.user
+            self.initial['author'] = self.user  # Autorem jest użytkownik
