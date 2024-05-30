@@ -60,7 +60,7 @@ def register_view(request):
         form = CustomUserCreationForm()
     return render(request, 'register.html', {'form': form})
 
-
+# Wylogowywanie użytkownika
 def logout_view(request):
     if request.method == 'GET':
         logout(request)
@@ -97,6 +97,7 @@ def doctorSearch(request):
 
     return render(request, 'base/doctorlist.html', {'ListOfDoctors': ListOfDoctors})
 
+# Okno listy czatów
 @login_required
 def chat_list(request):
     user = request.user
@@ -105,29 +106,31 @@ def chat_list(request):
     friends = user.friends.all()
 
     # Tworzymy listę czatów, gdzie każdy czat zawiera nazwę przyjaciela
-
-
     return render(request, 'base/chat_list.html', {'friends': friends})
 
+# Okno czatu
 @login_required
 def chat(request, recipient=None):
     user = request.user
+    # Przypisujemy odpowiedniego autora, odbiorcę, treść wiadomości i plik
     if request.method == 'POST':
         author = request.POST.get('author')
         recipient = request.POST.get('recipient')
         content = request.POST.get('content', '')
         file = request.FILES.get('file')
 
+        # Tworzenie nowej wiadomości
         message = Message(author=author, recipient=recipient, content=content, timestamp=timezone.now(), file=file)
         message.save()
         return redirect('chat_with_recipient', recipient=recipient)
 
+    # Wyświetlanie jedynie tych wiadomości, w których aktualny użytkownik jest autorem lub odbiorcą
     messages = Message.objects.filter(author=user.username) | Message.objects.filter(recipient=user.username)
+    # Wyświetlanie wiadomości posortowanych według czasu wysłania
     messages = messages.order_by('timestamp')
     return render(request, 'base/chat.html', {'messages': messages, 'recipient': recipient})
 
-
-
+# Okno "Kim jesteśmy"
 def about(request):
     if request.method == 'GET':
         return render(request, 'base/aboutus.html')

@@ -5,7 +5,7 @@ from django.contrib.auth import views as auth_views
 from django.contrib.auth.views import LogoutView
 from . import views
 
-
+# Wszystkie podstrony
 urlpatterns = [
     path('', index, name="index"),
     path('login/', login_view, name='login'),

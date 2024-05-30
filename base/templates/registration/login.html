@@ -1,4 +1,6 @@
 {% include 'base/layout.html' %}
+
+<!-- Strona logowania się -->
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,6 +23,7 @@
   </style>
 </head>
 
+<!-- Formularz - naszwa użytkownika i hasło -->
 <body>
 <div class="container mt-5">
   <h2 class="mb-4">Logowanie</h2>
@@ -29,7 +32,7 @@
   {% csrf_token %}
     
   {{ form.as_p }}
-  <button type="submit" class="btn btn-primary">Zaloguj się</button>
+  <button type="submit" class="btn btn-primary">Zaloguj się</button> <!-- Przycisk logowania się -->
   </form>
   {% endblock %}
 </div>

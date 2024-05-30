@@ -1,5 +1,6 @@
 {% include 'base/layout.html' %}
 
+<!-- Strona profilowa -->
 <!DOCTYPE html>
 <html lang="pl">
 <head>
@@ -93,6 +94,7 @@
     </style>
 </head>
 <body>
+    <!-- Wyświetlanie właściwych danych użytkownika - imię, nazwisko i nazwa użytkownika-->
     <div class="mainbody">
         <div class="profile">
             <h2>Twój profil</h2>
@@ -109,8 +111,10 @@
                     <span class="info-label">Nazwa użytkownika:</span>
                     <span class="info-value">{{user.username}}</span>
                 </div>
+                <!-- Jeśli użytkownik jest lekarzem, to wyśwetla się dodatkowo jego specjalizacja (lub specjalizacje) oraz krótki opis -->
                 {% if doctorCtx %}
                 <div class="info-row">
+                    <!-- Specjalizacje -->
                     <span class="info-label">Specjalizacje:</span>
                     <span class="info-value">
                         {% for specialization in doctorInfo.specializations.all %}
@@ -119,20 +123,21 @@
                         {% endfor %}
                     </span>
                 </div>
+                <!-- Opis lekarza / opis "o mnie" -->
                 <div class="info-row" contenteditable="true">
                     {{ doctorInfo.bio }}
                 </div>
                 {% endif %}
             </div>
             <div>
-              <button onclick="goBack()" class="button">Wróć</button>
+              <button onclick="goBack()" class="button">Wróć</button> <!-- Przycisk powrotu -->
             </div>
             
         </div>
     </div>
 </body>
 </html>
-
+<!-- Skrypty -->
 <script>
   function goBack() {
     window.history.back();
