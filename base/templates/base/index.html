@@ -14,31 +14,9 @@
 </head>
 <body>
 
-  <div class="elements">
-    <div class="container">
-      <button id="btn" data-bs-toggle="modal" data-bs-target="#DoctorModal">Dołącz do armii lekarzy</button>
-    </div>
-  </div>
 
 <!-- Dołączanie do armii lekarzy -->
-<div class="modal fade" id="DoctorModal" tabindex="-1">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Wypełnij formularz</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">  
-        <form method="post" action="{% url 'index' %}">
-          {% csrf_token %}
-          {{ form.specializations }}
-          {{form.lorem}}
-          <button type="submit" class="btn btn-primary">Zatwierdź</button>
-        </form>        
-      </div>
-    </div>
-  </div>
-</div>
+
 
  <!-- Szukanie lekarza -->
 <div class="modal fade" id="SearchModal" tabindex="1">
@@ -80,10 +58,7 @@
       $("#SearchModal").modal('show');
     });
 
-    // Perform search logic when search button is clicked
     $("#searchButton").click(function() {
-      // Here you can add logic to perform search
-      console.log("Performing search...");
     });
   });
 </script>

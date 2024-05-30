@@ -13,3 +13,7 @@ body {
     font-family: Arial, sans-serif; /* Ustawia czcionkę */
     color: #fff; /* Ustawia kolor tekstu */
 }
+
+  .modal-content {
+    color: black; /* Ustawia kolor tekstu na czarny */
+  }

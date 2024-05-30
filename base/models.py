@@ -18,7 +18,7 @@ class Specialization(models.Model):
 class DoctorInfo(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     specializations = models.ManyToManyField(Specialization)
-    lorem = models.TextField(max_length=350, null=True, default='')
+    encouragement = models.TextField(max_length=350, null=True, default='')
     bio = models.TextField(max_length=350, null=True, default='')
     approved = models.BooleanField(default=False)
     rate = models.FloatField(default = 0)
